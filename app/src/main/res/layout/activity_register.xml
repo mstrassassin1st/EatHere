@@ -100,9 +100,9 @@
             android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            style="?android:attr/borderlessButtonStyle"
             android:text="@string/login"
-            android:textColor="@color/colorWhite"/>
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
 
 </LinearLayout>

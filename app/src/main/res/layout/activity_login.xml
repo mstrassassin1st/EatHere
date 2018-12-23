@@ -76,7 +76,7 @@
             android:id="@+id/btnRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            style="?android:attr/borderlessButtonStyle"
             android:text="@string/register"
             android:textColor="@color/colorWhite"/>
     </LinearLayout>

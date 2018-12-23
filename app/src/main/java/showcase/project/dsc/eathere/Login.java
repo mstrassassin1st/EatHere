@@ -53,7 +53,8 @@ public class Login extends AppCompatActivity {
         return false;
     }
     public void doNothing(){
-
+        finish();
+        moveTaskToBack(true);
     }
 
     @Override
