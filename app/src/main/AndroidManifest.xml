@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/eathere_logo"
+        android:icon="@mipmap/ic_eathere_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/eathere_logo"
+        android:roundIcon="@mipmap/ic_eathere_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"/>
