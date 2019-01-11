@@ -25,6 +25,8 @@ public class PaymentRecipt extends AppCompatActivity {
         tvReservationID = findViewById(R.id.tv_reservation_id);
         tvReservationID.setText(String.format("%04d", reservationID));
 
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(PaymentRecipt.this);
+
         Button btnBackHome;
         btnBackHome = findViewById(R.id.btn_back_home);
 

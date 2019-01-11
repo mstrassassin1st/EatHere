@@ -88,6 +88,12 @@ public class DatabaseAccess {
         return cursor;
     }
 
+    public void insertHeaderTransaction(int userID, int restaurantID, int transactionQuantity, int totalTransactionPrice){
+        db.execSQL("INSERT INTO HeaderSalesTransaction (userID, restaurantID, transactionQuantity, totalTransactionPrice) VALUES " +
+                "('" + userID + "', '" + restaurantID + "', '" + transactionQuantity + "', '" + totalTransactionPrice + ")" );
+
+    }
+
     public Cursor viewMenu(int restaurantID){
         SQLiteDatabase db1 = openHelper.getReadableDatabase();
         Cursor cursor = db1.rawQuery("SELECT menuID, restaurantID, menuName, menuDescription, menuPrice, menuStock FROM MsMenu WHERE restaurantID = '" +  restaurantID + "'", null);

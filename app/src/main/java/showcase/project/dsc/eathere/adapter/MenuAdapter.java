@@ -63,7 +63,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                 cart.setMenuPrice(menuList.get(i).getMenuPrice());
                 //cart.setMenuQuantity(cart.getMenuID() + 1);
                 cartList.add(cart);
-                Toast.makeText(context, "Success added to order list", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Success added to order list", Toast.LENGTH_SHORT).show();
             }
         });
 
