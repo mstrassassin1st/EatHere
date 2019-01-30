@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -114,12 +115,21 @@ public class MainActivity extends AppCompatActivity implements ChangeEmail.Chang
 
     @Override
     public void applyNewEmail(String newEmail) {
-        tvCurrentEmail.setText(newEmail);
-        dataPassing.setEmail(newEmail);
-        databaseAccess.open();
-        databaseAccess.insertNewEmail(dataPassing.getUserID(), newEmail);
-        Toast.makeText(this, "Email has been updated", Toast.LENGTH_SHORT).show();
-        databaseAccess.close();
+        if (isValidEmail(newEmail)){
+            tvCurrentEmail.setText(newEmail);
+            dataPassing.setEmail(newEmail);
+            databaseAccess.open();
+            databaseAccess.insertNewEmail(dataPassing.getUserID(), newEmail);
+            Toast.makeText(this, "Email has been updated", Toast.LENGTH_SHORT).show();
+            databaseAccess.close();
+        }
+        else{
+            Toast.makeText(this, "Email is invalid", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public final static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
     @Override
@@ -129,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements ChangeEmail.Chang
         databaseAccess.open();
         databaseAccess.insertNewUsername(dataPassing.getUserID(), newUsername);
         Toast.makeText(this, "Username has been updated", Toast.LENGTH_SHORT).show();
+        tvName.setText(newUsername);
         databaseAccess.close();
     }
 
