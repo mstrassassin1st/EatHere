@@ -36,6 +36,15 @@ public class DatabaseAccess {
         db.execSQL("INSERT INTO MsUSER(userName, userPassword, userEmail, userEatpoints, userEatcash) VALUES('" + username + "', '" + password + "', '" + email + "'," + " 0, 0)");
     }
 
+    public int getID(String username, String password){
+        Cursor cursor = db.rawQuery("SELECT userID from MsUser WHERE userName = '" + username + "' AND userPassword = '" + password + "'", null);
+        int userID = 0;
+        if (cursor.moveToFirst()){
+            userID = cursor.getInt(cursor.getColumnIndex("userID"));
+        }
+        return userID;
+    }
+
     public String getEmail(String username, String password){
         Cursor cursor = db.rawQuery("SELECT userEmail from MsUser WHERE userName = '" + username + "' AND userPassword = '" + password + "'", new String[]{});
         String email = "";
@@ -91,7 +100,6 @@ public class DatabaseAccess {
     public void insertHeaderTransaction(int userID, int restaurantID, int transactionQuantity, int totalTransactionPrice){
         db.execSQL("INSERT INTO HeaderSalesTransaction (userID, restaurantID, transactionQuantity, totalTransactionPrice) VALUES " +
                 "('" + userID + "', '" + restaurantID + "', '" + transactionQuantity + "', '" + totalTransactionPrice + ")" );
-
     }
 
     public Cursor viewMenu(int restaurantID){
@@ -99,5 +107,17 @@ public class DatabaseAccess {
         Cursor cursor = db1.rawQuery("SELECT menuID, restaurantID, menuName, menuDescription, menuPrice, menuStock FROM MsMenu WHERE restaurantID = '" +  restaurantID + "'", null);
 
         return cursor;
+    }
+
+    public void insertNewEmail(int userID, String email){
+        db.execSQL("UPDATE MsUser SET userEmail = '" + email + "' WHERE userID = '" +  userID + "'");
+    }
+
+    public void insertNewUsername(int userID, String username){
+        db.execSQL("UPDATE MsUser SET userName = '" + username + "' WHERE userID = '" +  userID + "'");
+    }
+
+    public void insertNewPassword(int userID, String password){
+        db.execSQL("UPDATE MsUser SET userPassword = '" + password + "' WHERE userID = '" +  userID + "'");
     }
 }

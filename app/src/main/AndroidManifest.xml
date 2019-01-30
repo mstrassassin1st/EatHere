@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_eathere_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:label="Home"/>
+        
+        <activity
+            android:name=".MainActivity"
+            android:label="Home" />
         <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +26,7 @@
         <activity android:name=".RestaurantList" />
         <activity android:name=".OrderList" />
         <activity android:name=".Payment" />
-        <activity android:name=".PaymentRecipt"></activity>
+        <activity android:name=".PaymentRecipt" />
     </application>
 
 </manifest>

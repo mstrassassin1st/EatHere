@@ -1,17 +1,27 @@
 package showcase.project.dsc.eathere;
 
 public class DataPassing {
-    private static  DataPassing instance;
+    private static DataPassing instance;
     private String username;
     private String email;
     private int eatpoints;
     private int eatcash;
+    private int userID;
+
 
     public static DataPassing getInstance(){
         if (instance == null){
             instance = new DataPassing();
         }
         return instance;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public String getUsername() {

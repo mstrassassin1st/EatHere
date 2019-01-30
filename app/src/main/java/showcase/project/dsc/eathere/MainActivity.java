@@ -7,9 +7,13 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements ChangeEmail.EmailDialogListener {
+public class MainActivity extends AppCompatActivity implements ChangeEmail.ChangeEmailDialog, ChangeUsername.ChangeUsernameDialog, ChangePassword.ChangePasswordDialog {
     private DataPassing dataPassing = DataPassing.getInstance();
+    private String username;
+    private DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+    private TextView tvName, tvEatpoints, tvEatcash, tvCurrentEmail, tvCurrentUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,26 +21,52 @@ public class MainActivity extends AppCompatActivity implements ChangeEmail.Email
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tvName, tvEatpoints, tvEatcash;
         Button button;
-        CardView cardView;
+        CardView cvEmail, cvUsername, cvPassword;
 
+        tvCurrentEmail = findViewById(R.id.currentEmail);
         tvName = findViewById(R.id.tv_name);
         tvEatpoints = findViewById(R.id.tv_eatpoints);
         tvEatcash = findViewById(R.id.tv_eatcash);
-        cardView = findViewById(R.id.cv_change_email);
+        tvCurrentUsername = findViewById(R.id.currentUsername);
 
-        cardView.setOnClickListener(new View.OnClickListener() {
+        cvEmail = findViewById(R.id.cv_change_email);
+        cvUsername = findViewById(R.id.cv_change_username);
+        cvPassword = findViewById(R.id.cv_change_password);
+
+        cvEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog();
+                changeEmailDialog();
             }
         });
 
-        String username = dataPassing.getUsername();
+        cvUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeUsernameDialog();
+            }
+        });
+
+        cvPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePasswordDialog();
+            }
+        });
+
+        username = dataPassing.getUsername();
+        String email = dataPassing.getEmail();
+
+
         int eatpoints = dataPassing.getEatpoints();
         int eatcash = dataPassing.getEatcash();
+
         tvName.setText(username);
+        tvCurrentEmail.setText(email);
+        tvCurrentUsername.setText(username);
+
+
         tvEatpoints.setText("Eatpoints: " + String.valueOf(eatpoints));
         tvEatcash.setText("Eatcash: " + String.valueOf(eatcash));
 
@@ -51,11 +81,20 @@ public class MainActivity extends AppCompatActivity implements ChangeEmail.Email
         });
     }
 
-    public void openDialog(){
-        ChangeEmail changeEmail = new ChangeEmail();
-        changeEmail.show(getSupportFragmentManager(), "email");
+    private void changeEmailDialog(){
+        ChangeEmail changeEmail =  new ChangeEmail();
+        changeEmail.show(getSupportFragmentManager(), "changeEmail");
     }
 
+    private void changeUsernameDialog(){
+        ChangeUsername changeUsername = new ChangeUsername();
+        changeUsername.show(getSupportFragmentManager(), "changeUsername");
+    }
+
+    private void changePasswordDialog(){
+        ChangePassword changePassword = new ChangePassword();
+        changePassword.show(getSupportFragmentManager(), "changePassword");
+    }
 
     public boolean shouldAllowBack(){
         return false;
@@ -74,8 +113,30 @@ public class MainActivity extends AppCompatActivity implements ChangeEmail.Email
     }
 
     @Override
-    public void applyText(String email) {
-        String newEmail = email;
-        dataPassing.setEmail(email);
+    public void applyNewEmail(String newEmail) {
+        tvCurrentEmail.setText(newEmail);
+        dataPassing.setEmail(newEmail);
+        databaseAccess.open();
+        databaseAccess.insertNewEmail(dataPassing.getUserID(), newEmail);
+        Toast.makeText(this, "Email has been updated", Toast.LENGTH_SHORT).show();
+        databaseAccess.close();
+    }
+
+    @Override
+    public void applyNewUsername(String newUsername) {
+        tvCurrentUsername.setText(newUsername);
+        dataPassing.setUsername(newUsername);
+        databaseAccess.open();
+        databaseAccess.insertNewUsername(dataPassing.getUserID(), newUsername);
+        Toast.makeText(this, "Username has been updated", Toast.LENGTH_SHORT).show();
+        databaseAccess.close();
+    }
+
+    @Override
+    public void applyNewPassword(String newPassword) {
+        databaseAccess.open();
+        databaseAccess.insertNewPassword(dataPassing.getUserID(), newPassword);
+        Toast.makeText(this, "Password has been updated", Toast.LENGTH_SHORT).show();
+        databaseAccess.close();
     }
 }

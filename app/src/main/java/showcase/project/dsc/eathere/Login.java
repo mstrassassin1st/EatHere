@@ -40,6 +40,7 @@ public class Login extends AppCompatActivity {
                 }
                 else{
                     DataPassing dataPassing = DataPassing.getInstance();
+                    dataPassing.setUserID(databaseAccess.getID(uname, pw));
                     dataPassing.setUsername(databaseAccess.getUsername(uname, pw));
                     dataPassing.setEmail(databaseAccess.getEmail(uname, pw));
                     dataPassing.setEatcash(databaseAccess.getEatcash(uname, pw));
